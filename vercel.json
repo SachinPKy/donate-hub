@@ -2,7 +2,7 @@
     "version": 2,
     "builds": [
         {
-            "src": "pyproject.toml",
+            "src": "wsgi.py",
             "use": "@vercel/python"
         },
         {
@@ -16,19 +16,19 @@
     "routes": [
         {
             "src": "/api/(.*)",
-            "dest": "pyproject.toml"
+            "dest": "wsgi.py"
         },
         {
             "src": "/admin/(.*)",
-            "dest": "pyproject.toml"
+            "dest": "wsgi.py"
         },
         {
             "src": "/static/django/(.*)",
-            "dest": "pyproject.toml"
+            "dest": "wsgi.py"
         },
         {
             "src": "/media/(.*)",
-            "dest": "pyproject.toml"
+            "dest": "wsgi.py"
         },
         {
             "src": "/(.*)",
