@@ -2,7 +2,7 @@
     "version": 2,
     "builds": [
         {
-            "src": "index.py",
+            "src": "app.py",
             "use": "@vercel/python"
         },
         {
@@ -16,19 +16,19 @@
     "routes": [
         {
             "src": "/api/(.*)",
-            "dest": "index.py"
+            "dest": "app.py"
         },
         {
             "src": "/admin/(.*)",
-            "dest": "index.py"
+            "dest": "app.py"
         },
         {
             "src": "/static/django/(.*)",
-            "dest": "index.py"
+            "dest": "app.py"
         },
         {
             "src": "/media/(.*)",
-            "dest": "index.py"
+            "dest": "app.py"
         },
         {
             "src": "/(.*)",
