@@ -2,7 +2,7 @@
     "version": 2,
     "builds": [
         {
-            "src": "wsgi.py",
+            "src": "index.py",
             "use": "@vercel/python"
         },
         {
@@ -16,19 +16,19 @@
     "routes": [
         {
             "src": "/api/(.*)",
-            "dest": "wsgi.py"
+            "dest": "index.py"
         },
         {
             "src": "/admin/(.*)",
-            "dest": "wsgi.py"
+            "dest": "index.py"
         },
         {
             "src": "/static/django/(.*)",
-            "dest": "wsgi.py"
+            "dest": "index.py"
         },
         {
             "src": "/media/(.*)",
-            "dest": "wsgi.py"
+            "dest": "index.py"
         },
         {
             "src": "/(.*)",
