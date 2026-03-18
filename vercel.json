@@ -1,0 +1,38 @@
+{
+    "version": 2,
+    "builds": [
+        {
+            "src": "index.py",
+            "use": "@vercel/python"
+        },
+        {
+            "src": "frontend/package.json",
+            "use": "@vercel/static-build",
+            "config": {
+                "distDir": "dist"
+            }
+        }
+    ],
+    "routes": [
+        {
+            "src": "/api/(.*)",
+            "dest": "index.py"
+        },
+        {
+            "src": "/admin/(.*)",
+            "dest": "index.py"
+        },
+        {
+            "src": "/static/django/(.*)",
+            "dest": "index.py"
+        },
+        {
+            "src": "/media/(.*)",
+            "dest": "index.py"
+        },
+        {
+            "src": "/(.*)",
+            "dest": "frontend/package.json"
+        }
+    ]
+}
