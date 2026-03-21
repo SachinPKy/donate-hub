@@ -23,7 +23,7 @@ const VerifyOTP = () => {
         try {
           const response = await api.get(`/donations/${donationId}/`);
           setDonation(response.data);
-        } catch (err) {
+        } catch {
           setError('Failed to fetch donation details.');
         }
       };
@@ -38,8 +38,8 @@ const VerifyOTP = () => {
     try {
       const response = await api.post(`/donations/${donationId}/send-otp/`);
       setMessage(response.data.message);
-    } catch (err) {
-      setError(err.response?.data?.error || 'Failed to send OTP.');
+    } catch {
+      setError('Failed to send OTP.');
     } finally {
       setLoading(false);
     }
@@ -54,8 +54,8 @@ const VerifyOTP = () => {
       const response = await api.post(`/donations/${donationId}/verify-otp/`, { otp });
       setMessage(response.data.message);
       setTimeout(() => navigate(`/tracking/${donationId}`), 2000);
-    } catch (err) {
-      setError(err.response?.data?.error || 'Invalid OTP.');
+    } catch {
+      setError('Invalid OTP.');
     } finally {
       setLoading(false);
     }

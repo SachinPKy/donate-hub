@@ -35,7 +35,7 @@ const Login = () => {
             } else {
                 setError(result.error || 'Invalid username or password');
             }
-        } catch (err) {
+        } catch {
             setError('An unexpected error occurred. Please try again.');
         } finally {
             setLoading(false);
