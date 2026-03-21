@@ -7,5 +7,6 @@ python-dotenv
 psycopg2-binary
 google-generativeai
 xhtml2pdf
+reportlab<4.3.0
 gunicorn
 whitenoise

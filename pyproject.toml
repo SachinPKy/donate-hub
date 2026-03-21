@@ -12,6 +12,7 @@ dependencies = [
     "python-dotenv",
     "psycopg2-binary",
     "google-generativeai",
+    "reportlab<4.3.0",
     "xhtml2pdf",
     "gunicorn",
     "whitenoise",
