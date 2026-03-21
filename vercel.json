@@ -7,6 +7,7 @@
     "rewrites": [
         { "source": "/api/(.*)", "destination": "/donatehub/wsgi.py" },
         { "source": "/admin/(.*)", "destination": "/donatehub/wsgi.py" },
+        { "source": "/accounts/(.*)", "destination": "/donatehub/wsgi.py" },
         { "source": "/static/django/(.*)", "destination": "/donatehub/wsgi.py" },
         { "source": "/media/(.*)", "destination": "/donatehub/wsgi.py" },
         { "source": "/assets/(.*)", "destination": "/frontend/assets/$1" },
