@@ -27,7 +27,7 @@
             "destination": "/index.py"
         },
         {
-            "source": "/static/django/(.*)",
+            "source": "/static/(.*)",
             "destination": "/index.py"
         },
         {
