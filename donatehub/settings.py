@@ -153,7 +153,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 # ================= AUTH REDIRECTS =================
-FRONTEND_URL = "http://localhost:5173"
+FRONTEND_URL = os.getenv("FRONTEND_URL", "https://donate-hub.vercel.app")
 LOGIN_URL = f'{FRONTEND_URL}/login'
 LOGIN_REDIRECT_URL = FRONTEND_URL
 LOGOUT_REDIRECT_URL = f'{FRONTEND_URL}/login'
