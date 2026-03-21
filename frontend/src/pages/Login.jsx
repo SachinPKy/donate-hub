@@ -44,8 +44,8 @@ const Login = () => {
 
     const handleGoogleLogin = () => {
         // Redirect to Django Allauth Google Login
-        // Ensure this matches your production backend domain
-        const backendUrl = 'https://donate-hub-six.vercel.app';
+        // Using window.location.origin ensures it works across production, previews, and localhost
+        const backendUrl = window.location.origin;
         window.location.href = `${backendUrl}/accounts/google/login/?next=/api/social-callback/`;
     };
 
