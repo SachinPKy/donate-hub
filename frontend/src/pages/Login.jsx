@@ -44,7 +44,7 @@ const Login = () => {
 
     const handleGoogleLogin = () => {
         // Redirect to Django Allauth Google Login
-        window.location.href = "http://localhost:8000/accounts/google/login/?next=/api/social-callback/";
+        window.location.href = `${window.location.origin}/accounts/google/login/?next=/api/social-callback/`;
     };
 
     return (

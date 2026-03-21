@@ -56,7 +56,7 @@ const Register = () => {
     };
 
     const handleGoogleSignup = () => {
-        window.location.href = "http://localhost:8000/accounts/google/login/?next=/api/social-callback/";
+        window.location.href = `${window.location.origin}/accounts/google/login/?next=/api/social-callback/`;
     };
 
     return (
