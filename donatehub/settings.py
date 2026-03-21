@@ -10,12 +10,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # ================= SECURITY =================
-SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "django-insecure-fallback-only-for-build")
 
-DEBUG = True
+DEBUG = os.getenv("DJANGO_DEBUG", "True") == "True"
 
-ALLOWED_HOSTS = ['.vercel.app', 'localhost', '127.0.0.1']
-CSRF_TRUSTED_ORIGINS = ['https://*.vercel.app']
+ALLOWED_HOSTS = ['*']  # For Vercel, * is often easier for dynamic domains
+CSRF_TRUSTED_ORIGINS = [
+    'https://*.vercel.app',
+    'https://donate-hub-six.vercel.app'
+]
 
 
 # ================= APPLICATIONS =================
@@ -153,10 +156,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 # ================= AUTH REDIRECTS =================
-FRONTEND_URL = "http://localhost:5173"
-LOGIN_URL = f'{FRONTEND_URL}/login'
-LOGIN_REDIRECT_URL = FRONTEND_URL
-LOGOUT_REDIRECT_URL = f'{FRONTEND_URL}/login'
+# In settings.py, we make these relative so they work on any Vercel domain
+FRONTEND_URL = os.getenv("FRONTEND_URL", "")
+LOGIN_URL = '/login'
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/login'
 
 
 # ================= DJANGO-ALLAUTH CONFIGURATION =================
@@ -222,7 +226,18 @@ GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
+    "http://localhost:3000",
 ]
+
+# Add FRONTEND_URL to CORS if set
+if FRONTEND_URL:
+    CORS_ALLOWED_ORIGINS.append(FRONTEND_URL)
+
+# For Vercel preview deployments
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    r"^https:\/\/.*\.vercel\.app$",
+]
+
 CORS_ALLOW_CREDENTIALS = True
 
 # ================= REST FRAMEWORK CONFIG =================

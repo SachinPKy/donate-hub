@@ -48,7 +48,7 @@ const AdminDashboard = () => {
                         </p>
                     </div>
                     <div className="d-flex gap-3">
-                        <a href="http://localhost:8000/admin/" target="_blank" rel="noopener noreferrer" className="btn btn-premium-secondary d-flex align-items-center gap-2">
+                        <a href="/admin/" target="_blank" rel="noopener noreferrer" className="btn btn-premium-secondary d-flex align-items-center gap-2">
                             <i className="bi bi-gear-fill"></i> Django Backend
                         </a>
                     </div>

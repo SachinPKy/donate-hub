@@ -180,10 +180,13 @@ const MyDonations = () => {
                                             <td className="image-cell">
                                                 {donation.main_image ? (
                                                     <img
-                                                        src={`http://localhost:8000${donation.main_image}`}
+                                                        src={donation.main_image.startsWith('http') ? donation.main_image : `${import.meta.env.VITE_API_URL?.replace('/api', '') || ''}${donation.main_image}`}
                                                         alt="thumb"
                                                         className="donation-thumb"
-                                                        onClick={() => setSelectedImage({ url: `http://localhost:8000${donation.main_image}`, title: donation.category })}
+                                                        onClick={() => setSelectedImage({ 
+                                                            url: donation.main_image.startsWith('http') ? donation.main_image : `${import.meta.env.VITE_API_URL?.replace('/api', '') || ''}${donation.main_image}`, 
+                                                            title: donation.category 
+                                                        })}
                                                     />
                                                 ) : (
                                                     <span className="text-muted">-</span>

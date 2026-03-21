@@ -14,6 +14,7 @@ class RegisterView(generics.CreateAPIView):
     serializer_class = RegisterSerializer
 
 from django.core.mail import send_mail
+from django.conf import settings
 
 class DonationListCreateView(generics.ListCreateAPIView):
     serializer_class = DonationSerializer
@@ -42,7 +43,7 @@ class DonationListCreateView(generics.ListCreateAPIView):
                         f"Category: {donation.category}\n"
                         f"Location: {donation.area}\n"
                         f"Pickup Date: {donation.pickup_date}\n\n"
-                        f"Track it here: http://localhost:5173/tracking/{donation.id}\n\n"
+                        f"Track it here: {settings.FRONTEND_URL or 'https://' + self.request.get_host()}/tracking/{donation.id}\n\n"
                         f"Regards,\nDonateHub Team"
                     ),
                     from_email=None,

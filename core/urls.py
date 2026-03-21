@@ -34,7 +34,8 @@ urlpatterns = [
     path('api/auth/reset-password/', ResetPasswordView.as_view(), name='api_reset_password'),
     path('api/admin/stats/', AdminStatsView.as_view(), name='api_admin_stats'),
 
-    path('', home, name='home'),
+
+    # path('', home, name='home'),  # Removed for Vercel static routing
     path('register/', register, name='register'),
     path('add/', add_donation, name='add_donation'),
     path('my-donations/', my_donations, name='my_donations'),

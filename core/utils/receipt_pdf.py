@@ -1,7 +1,7 @@
 import logging
 from django.http import HttpResponse
 from django.template.loader import get_template
-from xhtml2pdf import pisa
+# from xhtml2pdf import pisa  # Removed from top-level to prevent Vercel startup crash
 
 logger = logging.getLogger(__name__)
 
@@ -27,10 +27,14 @@ def render_to_pdf(template_src, context):
     response['Content-Disposition'] = f'attachment; filename="receipt_{context.get("donation_id", "unknown")}.pdf"'
     
     try:
+        from xhtml2pdf import pisa
         pisa_status = pisa.CreatePDF(html, dest=response)
         logger.info(f"[PDF-UTILS] PDF generation status: {pisa_status.err}")
         if pisa_status.err:
             logger.error("[PDF-UTILS] PDF generation had errors")
+    except ImportError as e:
+        logger.error(f"[PDF-UTILS] xhtml2pdf/pycairo Import failed (likely Vercel environment): {e}")
+        return HttpResponse("PDF generation is currently unavailable on this platform due to missing system libraries.", status=503)
     except Exception as e:
         logger.error(f"[PDF-UTILS] PDF creation failed: {e}")
         raise

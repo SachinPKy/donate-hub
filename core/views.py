@@ -17,12 +17,19 @@ from .utils.receipt_pdf import render_to_pdf
 
 
 # ================= HOME =================
+from django.http import HttpResponse
+
 def home(request):
-    return redirect(settings.FRONTEND_URL)
+    # If FRONTEND_URL is set and valid, redirect there. Otherwise show status.
+    if settings.FRONTEND_URL and "localhost" not in settings.FRONTEND_URL:
+        return redirect(settings.FRONTEND_URL)
+    return HttpResponse("DonateHub Backend is Alive! Please ensure FRONTEND_URL is set in Vercel to access the React app.", content_type="text/plain")
 
 
 def register(request):
-    return redirect(f"{settings.FRONTEND_URL}/register")
+    if settings.FRONTEND_URL and "localhost" not in settings.FRONTEND_URL:
+        return redirect(f"{settings.FRONTEND_URL}/register")
+    return redirect("/register") # Fallback to relative
 
 
 def social_login_cancelled(request):

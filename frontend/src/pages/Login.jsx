@@ -44,7 +44,8 @@ const Login = () => {
 
     const handleGoogleLogin = () => {
         // Redirect to Django Allauth Google Login
-        window.location.href = "http://localhost:8000/accounts/google/login/?next=/api/social-callback/";
+        const backendUrl = import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL.replace('/api', '') : window.location.origin;
+        window.location.href = `${backendUrl}/accounts/google/login/?next=/api/social-callback/`;
     };
 
     return (
