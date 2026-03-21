@@ -153,7 +153,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 # ================= AUTH REDIRECTS =================
-FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:5173")
+vercel_url = os.getenv("VERCEL_URL")
+FRONTEND_URL = os.getenv("FRONTEND_URL", f"https://{vercel_url}" if vercel_url else "http://localhost:5173")
 LOGIN_URL = f'{FRONTEND_URL}/login'
 LOGIN_REDIRECT_URL = FRONTEND_URL
 LOGOUT_REDIRECT_URL = f'{FRONTEND_URL}/login'
