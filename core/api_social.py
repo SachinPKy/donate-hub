@@ -12,7 +12,10 @@ def social_auth_callback(request):
     user = request.user
     refresh = RefreshToken.for_user(user)
     
-    frontend_url = f"{settings.FRONTEND_URL}/social-callback"
+    # Get frontend URL from settings, fallback to relative if not set
+    frontend_base = settings.FRONTEND_URL.rstrip('/') if settings.FRONTEND_URL else ''
+    frontend_url = f"{frontend_base}/social-callback"
+    
     access_token = str(refresh.access_token)
     refresh_token = str(refresh)
     
