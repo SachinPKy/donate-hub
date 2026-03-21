@@ -1,10 +1,12 @@
 import axios from 'axios';
 
 let apiBaseUrl = import.meta.env.VITE_API_URL || '';
-if (!apiBaseUrl) {
-    apiBaseUrl = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
-        ? 'http://localhost:8000/api' 
-        : '/api';
+
+// Force relative paths if deployed on Vercel but VITE_API_URL contains localhost
+if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+    apiBaseUrl = '/api';
+} else if (!apiBaseUrl) {
+    apiBaseUrl = 'http://localhost:8000/api';
 } else if (!apiBaseUrl.endsWith('/api') && !apiBaseUrl.endsWith('/api/')) {
     apiBaseUrl = apiBaseUrl.replace(/\/$/, '') + '/api';
 }
