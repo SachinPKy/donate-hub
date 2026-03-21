@@ -56,7 +56,9 @@ const Register = () => {
     };
 
     const handleGoogleSignup = () => {
-        window.location.href = `${window.location.origin}/accounts/google/login/?next=/api/social-callback/`;
+        // Ensure this matches your production backend domain
+        const backendUrl = 'https://donate-hub-six.vercel.app';
+        window.location.href = `${backendUrl}/accounts/google/login/?next=/api/social-callback/`;
     };
 
     return (
