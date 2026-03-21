@@ -18,10 +18,7 @@ dependencies = [
 ]
 
 [tool.uv]
-package = true
-
-[project.scripts]
-app = "donatehub.wsgi:application"
+package = false
 
 [tool.vercel]
 # Optional Vercel settings if needed.

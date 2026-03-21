@@ -60,3 +60,5 @@ build/
 # Production
 /build
 /dist
+.vercel
+.env*.local

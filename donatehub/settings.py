@@ -28,7 +28,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
 
-    # django-allauth
+    # django-allauth google sigin
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
