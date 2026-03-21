@@ -1,7 +1,16 @@
 import axios from 'axios';
 
+let apiBaseUrl = import.meta.env.VITE_API_URL || '';
+if (!apiBaseUrl) {
+    apiBaseUrl = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
+        ? 'http://localhost:8000/api' 
+        : '/api';
+} else if (!apiBaseUrl.endsWith('/api') && !apiBaseUrl.endsWith('/api/')) {
+    apiBaseUrl = apiBaseUrl.replace(/\/$/, '') + '/api';
+}
+
 const api = axios.create({
-    baseURL: import.meta.env.VITE_API_URL || '/api',
+    baseURL: apiBaseUrl,
     headers: {
         'Content-Type': 'application/json',
     },
@@ -29,7 +38,6 @@ api.interceptors.response.use(
             const refreshToken = localStorage.getItem('refresh_token');
             if (refreshToken) {
                 try {
-                    const apiBaseUrl = import.meta.env.VITE_API_URL || '/api';
                     const response = await axios.post(`${apiBaseUrl}/token/refresh/`, {
                         refresh: refreshToken,
                     });
