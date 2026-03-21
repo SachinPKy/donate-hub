@@ -1,15 +1,15 @@
 {
     "version": 2,
     "builds": [
-        { "src": "donatehub/wsgi.py", "use": "@vercel/python", "config": { "runtime": "python3.12" } },
+        { "src": "api/index.py", "use": "@vercel/python" },
         { "src": "frontend/package.json", "use": "@vercel/static-build", "config": { "distDir": "dist" } }
     ],
     "rewrites": [
-        { "source": "/api/(.*)", "destination": "/donatehub/wsgi.py" },
-        { "source": "/admin/(.*)", "destination": "/donatehub/wsgi.py" },
-        { "source": "/accounts/(.*)", "destination": "/donatehub/wsgi.py" },
-        { "source": "/static/django/(.*)", "destination": "/donatehub/wsgi.py" },
-        { "source": "/media/(.*)", "destination": "/donatehub/wsgi.py" },
+        { "source": "/api/(.*)", "destination": "/api/index.py" },
+        { "source": "/admin/(.*)", "destination": "/api/index.py" },
+        { "source": "/accounts/(.*)", "destination": "/api/index.py" },
+        { "source": "/static/django/(.*)", "destination": "/api/index.py" },
+        { "source": "/media/(.*)", "destination": "/api/index.py" },
         { "source": "/assets/(.*)", "destination": "/frontend/assets/$1" },
         { "source": "/images/(.*)", "destination": "/frontend/images/$1" },
         { "source": "/((?!api|admin|static/django|media).*)", "destination": "/frontend/index.html" }
