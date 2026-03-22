@@ -29,14 +29,15 @@ if not DEBUG:
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
     USE_X_FORWARDED_HOST = True
     ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'https'
+    # Enforce secure cookies in production (Vercel is always HTTPS)
+    CSRF_COOKIE_SECURE = True
+    SESSION_COOKIE_SECURE = True
 else:
     # Local Development Settings
     USE_X_FORWARDED_HOST = False
     ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'http'
-
-# Enforce secure cookies in production (Vercel is always HTTPS)
-CSRF_COOKIE_SECURE = True
-SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = False
+    SESSION_COOKIE_SECURE = False
 
 
 # ================= APPLICATIONS =================
