@@ -177,7 +177,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # ================= AUTH REDIRECTS =================
 if DEBUG:
-    FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:5173")
+    # Let the view dynamically calculate the URL if empty, for local network/phone testing
+    FRONTEND_URL = os.getenv("FRONTEND_URL", "")
 else:
     FRONTEND_URL = os.getenv("FRONTEND_URL", "https://donate-hub-six.vercel.app")
     
