@@ -27,7 +27,7 @@ const MyDonations = () => {
     const handleDownloadReceipt = async (donationId, receiptNumber) => {
         setDownloading(true);
         try {
-            const response = await api.get(`/api/receipt/${donationId}/pdf/`, {
+            const response = await api.get(`/receipt/${donationId}/pdf/`, {
                 responseType: 'blob',
             });
             
