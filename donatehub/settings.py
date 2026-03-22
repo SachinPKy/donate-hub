@@ -116,8 +116,8 @@ DATABASES = {
         'USER': 'postgres.brhhgmacrcuzvgaljyxu',
         'PASSWORD': os.getenv("DB_PASSWORD"),
         'HOST': 'aws-1-ap-south-1.pooler.supabase.com',
-        'PORT': '5432',
-        'CONN_MAX_AGE': 60,
+        'PORT': '6543',
+        'CONN_MAX_AGE': 0,
         'OPTIONS': {
             'sslmode': 'require',
         },
