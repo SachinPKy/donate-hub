@@ -62,9 +62,37 @@
             border-top: 1px solid #eee;
             padding-top: 10px;
         }
+        .print-btn-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .print-btn {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        @media print {
+            .print-btn-container {
+                display: none;
+            }
+            @page {
+                margin: 0;
+            }
+            body {
+                margin: 2cm;
+            }
+        }
     </style>
 </head>
 <body>
+    <div class="print-btn-container">
+        <button class="print-btn" onclick="window.print()">Print Receipt / Save as PDF</button>
+    </div>
     <div class="header">
         <div class="logo">DonateHub</div>
         <div class="receipt-title">Donation Receipt</div>

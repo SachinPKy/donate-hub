@@ -161,25 +161,21 @@ def download_receipt(request, donation_id):
         'image_urls': image_urls,
     })
 
-    response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = f'attachment; filename="receipt_{donation.receipt_number}.pdf"'
-    
-    try:
-        from xhtml2pdf import pisa
-        pisa_status = pisa.CreatePDF(html, dest=response)
-        if pisa_status.err:
-            logger.error(f"PDF generation had errors: {pisa_status.err}")
-            # Fallback to HTML
-            response.write(html.encode('utf-8'))
-            response['Content-Type'] = 'text/html'
-            response['Content-Disposition'] = f'attachment; filename="receipt_{donation.receipt_number}.html"'
-    except Exception as e:
-        logger.error(f"PDF creation failed: {e}")
-        response.write(html.encode('utf-8'))
-        response['Content-Type'] = 'text/html'
-        response['Content-Disposition'] = f'attachment; filename="receipt_{donation.receipt_number}.html"'
-
-    return response
+    from .utils.receipt_pdf import render_to_pdf
+    return render_to_pdf('receipt.html', {
+        'donation': donation,
+        'donation_id': donation.id,
+        'receipt_number': donation.receipt_number,
+        'donor_name': donation.donor.username,
+        'category': donation.category,
+        'description': donation.description,
+        'area': donation.area,
+        'district': donation.district,
+        'status': donation.get_status_display(),
+        'pickup_date': donation.pickup_date,
+        'created_at': donation.created_at,
+        'image_urls': image_urls,
+    })
 
 
 # ================= ADMIN DASHBOARD =================

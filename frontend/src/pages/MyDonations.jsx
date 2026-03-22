@@ -27,16 +27,26 @@ const MyDonations = () => {
     const handleDownloadReceipt = async (donationId, receiptNumber) => {
         setDownloading(true);
         try {
-            const response = await api.get(`/receipt/${donationId}/pdf/`, {
+            const response = await api.get(`/api/receipt/${donationId}/pdf/`, {
                 responseType: 'blob',
             });
-            const url = window.URL.createObjectURL(new Blob([response.data]));
-            const link = document.createElement('a');
-            link.href = url;
-            link.setAttribute('download', `receipt_${receiptNumber}.pdf`);
-            document.body.appendChild(link);
-            link.click();
-            link.parentNode.removeChild(link);
+            
+            const contentType = response.headers['content-type'];
+            const blob = new Blob([response.data], { type: contentType });
+            const url = window.URL.createObjectURL(blob);
+            
+            if (contentType === 'text/html') {
+                // If it's HTML, open in a new tab so they can print/save as PDF natively
+                window.open(url, '_blank');
+            } else {
+                // If it's a real PDF, download it
+                const link = document.createElement('a');
+                link.href = url;
+                link.setAttribute('download', `receipt_${receiptNumber}.pdf`);
+                document.body.appendChild(link);
+                link.click();
+                link.parentNode.removeChild(link);
+            }
         } catch (err) {
             console.error('Error downloading receipt:', err);
             alert('Failed to download receipt. Please try again later.');
