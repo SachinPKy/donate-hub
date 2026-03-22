@@ -66,4 +66,5 @@ urlpatterns = [
     path('api/donations/', DonationListCreateView.as_view(), name='api_donations'),
     path('api/donations/<int:pk>/', DonationDetailView.as_view(), name='api_donation_detail'),
     path('api/social-callback/', social_auth_callback, name='social_auth_callback'),
+    path('api/auth/callback/', social_auth_callback, name='social_auth_callback_alt'),
 ]
