@@ -185,7 +185,7 @@ def download_receipt(request, donation_id):
 # ================= ADMIN DASHBOARD =================
 @login_required
 def admin_dashboard(request):
-    return redirect(f"{settings.FRONTEND_URL}/admin")
+    return redirect(f"{settings.FRONTEND_URL}/dashboard")
 
 
 # ================= API: GET DISTRICTS =================

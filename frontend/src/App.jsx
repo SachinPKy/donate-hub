@@ -38,7 +38,7 @@ function App() {
             <Route path="/success" element={<Success />} />
             <Route path="/verify-otp" element={<VerifyOTP />} />
             <Route path="/receipt" element={<Receipt />} />
-            <Route path="/admin" element={<AdminDashboard />} />
+            <Route path="/dashboard" element={<AdminDashboard />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/reset-password" element={<ResetPassword />} />
             <Route path="/social-callback" element={<SocialCallback />} />

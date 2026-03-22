@@ -30,7 +30,7 @@ const Navbar = () => {
                         {isAuthenticated && isSuperuser ? (
                             <>
                                 <li className="nav-item">
-                                    <Link className="nav-link" to="/admin">Admin Dashboard</Link>
+                                    <Link className="nav-link" to="/dashboard">Admin Dashboard</Link>
                                 </li>
                                 <li className="nav-item ms-lg-2">
                                     <form onSubmit={handleLogout}>
