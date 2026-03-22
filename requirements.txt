@@ -6,6 +6,5 @@ django-cors-headers
 python-dotenv
 psycopg2-binary
 google-generativeai
-xhtml2pdf>=0.2.14
 gunicorn
 whitenoise
