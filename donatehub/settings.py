@@ -20,6 +20,11 @@ CSRF_TRUSTED_ORIGINS = [
     'https://donate-hub-six.vercel.app'
 ]
 
+# Vercel-specific proxy settings
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+USE_X_FORWARDED_HOST = True
+ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'https'
+
 
 # ================= APPLICATIONS =================
 INSTALLED_APPS = [
