@@ -181,9 +181,14 @@ AUTHENTICATION_BACKENDS = [
 # Allauth settings (new format for django-allauth 65+)
 ACCOUNT_LOGIN_METHODS = {'email', 'username'}
 ACCOUNT_USERNAME_MIN_LENGTH = 4
-ACCOUNT_SIGNUP_FIELDS = ['email*', 'username*', 'password1*', 'password2*']
+ACCOUNT_SIGNUP_FIELDS = {'email*', 'username*', 'password1*', 'password2*'}
 ACCOUNT_UNIQUE_EMAIL = True  # Prevent duplicate users by email
 ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 3
+
+# CRITICAL: Do NOT require email verification - allow JWT login for all users
+ACCOUNT_EMAIL_VERIFICATION = 'none'
+ACCOUNT_EMAIL_REQUIRED = False
+ACCOUNT_AUTHENTICATED_LOGIN_REDIRECTS = False
 
 # Social account settings
 SOCIALACCOUNT_AUTO_SIGNUP = True  # Auto create user if not exists

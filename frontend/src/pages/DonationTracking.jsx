@@ -14,7 +14,7 @@ const DonationTracking = () => {
   useEffect(() => {
     const fetchDonation = async () => {
       try {
-        const response = await api.get(`/donations/${id}/`);
+        const response = await api.get(`donations/${id}/`);
         setDonation(response.data);
       } catch (err) {
         console.error('Error fetching donation tracking:', err);
@@ -29,7 +29,7 @@ const DonationTracking = () => {
   const handleDownloadReceipt = async () => {
     setDownloading(true);
     try {
-      const response = await api.get(`/receipt/${id}/pdf/`, {
+      const response = await api.get(`receipt/${id}/pdf/`, {
         responseType: 'blob',
       });
       const url = window.URL.createObjectURL(new Blob([response.data]));

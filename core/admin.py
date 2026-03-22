@@ -130,6 +130,7 @@ class DonationAdmin(admin.ModelAdmin):
         'updated_at',
         'receipt_number',
         'otp',
+        'otp_created_at',
         'otp_verified',
     )
     
@@ -248,7 +249,7 @@ class DonationImageAdmin(admin.ModelAdmin):
     def donation_donor(self, obj):
         return obj.donation.donor.username
     
-    donation_donor.short_name = 'Donor'
+    donation_donor.short_description = 'Donor'
 
 
 # ================= ADMIN: Donation Tracking =================
@@ -288,4 +289,4 @@ class DonationTrackingAdmin(admin.ModelAdmin):
     def donation_donor(self, obj):
         return obj.donation.donor.username
     
-    donation_donor.short_name = 'Donor'
+    donation_donor.short_description = 'Donor'

@@ -12,7 +12,7 @@ const MyDonations = () => {
     useEffect(() => {
         const fetchDonations = async () => {
             try {
-                const response = await api.get('/donations/');
+                const response = await api.get('donations/');
                 setDonations(response.data);
             } catch (err) {
                 console.error('Error fetching donations:', err);

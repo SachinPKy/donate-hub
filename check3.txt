@@ -1,0 +1,9 @@
+﻿STDOUT: 
+STDERR: System check identified some issues:
+
+WARNINGS:
+?: settings.ACCOUNT_EMAIL_REQUIRED is deprecated, use: settings.ACCOUNT_SIGNUP_FIELDS = ['password1*', 'email*', 'password2*', 'username*']
+
+System check identified 1 issue (0 silenced).
+
+Return code: 0

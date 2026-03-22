@@ -2,11 +2,35 @@ from rest_framework import generics, permissions, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.views import TokenObtainPairView
+import logging
+
+logger = logging.getLogger(__name__)
 from django.contrib.auth.models import User
 from .models import Donation, DonationImage, DonationTracking
 from .serializers import (
     UserSerializer, RegisterSerializer, DonationSerializer
 )
+
+class LoggingTokenObtainPairView(TokenObtainPairView):
+    def post(self, request, *args, **kwargs):
+        username = request.data.get('username')
+        logger.info(f"Login attempt for user: {username}")
+        print(f"DEBUG: Login attempt for user: {username}")
+        
+        # Test authentication manually here to see if it works within the view context
+        from django.contrib.auth import authenticate
+        password = request.data.get('password')
+        auth_user = authenticate(username=username, password=password)
+        print(f"DEBUG: Internal authenticate() result for {username}: {auth_user}")
+        
+        response = super().post(request, *args, **kwargs)
+        if response.status_code != 200:
+            logger.warning(f"Login failed for user: {username} - {response.data}")
+            print(f"DEBUG: Login failed for {username}: {response.data}")
+        else:
+            print(f"DEBUG: Login success for {username}")
+        return response
+
 
 class RegisterView(generics.CreateAPIView):
     queryset = User.objects.all()

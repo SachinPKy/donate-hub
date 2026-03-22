@@ -81,7 +81,7 @@ const AddDonation = () => {
         });
 
         try {
-            await api.post('/donations/', data, {
+            await api.post('donations/', data, {
                 headers: { 'Content-Type': 'multipart/form-data' }
             });
             alert("Donation submitted successfully!");

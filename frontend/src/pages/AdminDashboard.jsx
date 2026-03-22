@@ -11,7 +11,7 @@ const AdminDashboard = () => {
     useEffect(() => {
         const fetchStats = async () => {
             try {
-                const response = await api.get('/admin/stats/');
+                const response = await api.get('admin/stats/');
                 setStats(response.data);
             } catch (err) {
                 setError('Failed to fetch dashboard data. Make sure you have admin privileges.');

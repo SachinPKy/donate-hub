@@ -1,0 +1,37 @@
+﻿python : System 
+check identified 
+some issues:
+At line:1 char:1
++ python manage.py 
+check --verbosity=2 
+2>&1 | Out-File 
+"C:\Users\sachi\ ...
++ ~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~
+~~~
+    + CategoryInfo  
+            : NotS  
+  pecified: (Syst   
+ em check identi    
+fied some issue    
+s::String) [],     
+RemoteException
+    + FullyQualifie 
+   dErrorId : Nati  
+  veCommandError
+ 
+
+WARNINGS:
+?: settings.ACCOUNT_
+EMAIL_REQUIRED is 
+deprecated, use: set
+tings.ACCOUNT_SIGNUP
+_FIELDS = 
+['username*', 
+'email*', 
+'password2*', 
+'password1*']
+
+System check 
+identified 1 issue 
+(0 silenced).

@@ -21,7 +21,7 @@ const VerifyOTP = () => {
     if (donationId) {
       const fetchDonation = async () => {
         try {
-          const response = await api.get(`/donations/${donationId}/`);
+          const response = await api.get(`donations/${donationId}/`);
           setDonation(response.data);
         } catch {
           setError('Failed to fetch donation details.');
@@ -36,7 +36,7 @@ const VerifyOTP = () => {
     setError('');
     setMessage('');
     try {
-      const response = await api.post(`/donations/${donationId}/send-otp/`);
+      const response = await api.post(`donations/${donationId}/send-otp/`);
       setMessage(response.data.message);
     } catch {
       setError('Failed to send OTP.');
@@ -51,7 +51,7 @@ const VerifyOTP = () => {
     setError('');
     setMessage('');
     try {
-      const response = await api.post(`/donations/${donationId}/verify-otp/`, { otp });
+      const response = await api.post(`donations/${donationId}/verify-otp/`, { otp });
       setMessage(response.data.message);
       setTimeout(() => navigate(`/tracking/${donationId}`), 2000);
     } catch {

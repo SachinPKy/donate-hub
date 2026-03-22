@@ -9,6 +9,12 @@ from core.views import social_login_cancelled, social_login_error, home
 
 # handler404 = 'donatehub.urls.simple_404'
 
+# Customizing Django Admin branding
+admin.site.site_header = "DonateHub Administration"
+admin.site.site_title = "DonateHub Admin Portal"
+admin.site.index_title = "Welcome to DonateHub Administration"
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     

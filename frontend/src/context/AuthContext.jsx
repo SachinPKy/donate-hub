@@ -13,7 +13,7 @@ export const AuthProvider = ({ children }) => {
             const token = localStorage.getItem('access_token');
             if (token) {
                 try {
-                    const response = await api.get('/user/');
+                    const response = await api.get('user/');
                     setUser(response.data);
                 } catch (error) {
                     console.error('Auth verification failed', error);
@@ -28,11 +28,11 @@ export const AuthProvider = ({ children }) => {
 
     const login = async (username, password) => {
         try {
-            const response = await api.post('/token/', { username, password });
+            const response = await api.post('token/', { username, password });
             localStorage.setItem('access_token', response.data.access);
             localStorage.setItem('refresh_token', response.data.refresh);
 
-            const userResponse = await api.get('/user/');
+            const userResponse = await api.get('user/');
             setUser(userResponse.data);
             return { success: true };
         } catch (error) {
@@ -51,7 +51,7 @@ export const AuthProvider = ({ children }) => {
 
     const register = async (username, email, password) => {
         try {
-            await api.post('/register/', { username, email, password });
+            await api.post('register/', { username, email, password });
             return { success: true };
         } catch (error) {
             return {
@@ -64,7 +64,7 @@ export const AuthProvider = ({ children }) => {
     const setTokens = async (access, refresh) => {
         localStorage.setItem('access_token', access);
         localStorage.setItem('refresh_token', refresh);
-        const userResponse = await api.get('/user/');
+        const userResponse = await api.get('user/');
         setUser(userResponse.data);
     };
 

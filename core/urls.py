@@ -12,7 +12,7 @@ from .views import (
     admin_dashboard,
 )
 from .api_views import (
-    RegisterView, UserDetailView, DonationListCreateView, DonationDetailView
+    RegisterView, UserDetailView, DonationListCreateView, DonationDetailView, LoggingTokenObtainPairView
 )
 from .api_social import social_auth_callback
 from .api_otp_auth import (
@@ -60,7 +60,7 @@ urlpatterns = [
 
     # API Endpoints
     path('api/register/', RegisterView.as_view(), name='api_register'),
-    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/', LoggingTokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/user/', UserDetailView.as_view(), name='api_user_detail'),
     path('api/donations/', DonationListCreateView.as_view(), name='api_donations'),

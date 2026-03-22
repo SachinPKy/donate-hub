@@ -6,8 +6,10 @@
     ],
     "rewrites": [
         { "source": "/api/(.*)", "destination": "/api/index.py" },
+        { "source": "/admin", "destination": "/api/index.py" },
         { "source": "/admin/(.*)", "destination": "/api/index.py" },
         { "source": "/accounts/(.*)", "destination": "/api/index.py" },
+        { "source": "/static/admin/(.*)", "destination": "/api/index.py" },
         { "source": "/static/django/(.*)", "destination": "/api/index.py" },
         { "source": "/media/(.*)", "destination": "/api/index.py" },
         { "source": "/assets/(.*)", "destination": "/frontend/assets/$1" },

@@ -1,0 +1,32 @@
+﻿python : System check 
+identified some issues:
+At line:1 char:1
++ python manage.py 
+check 2>&1 | Out-File "C
+:\Users\sachi\donate-hub
+\che ...
++ ~~~~~~~~~~~~~~~~~~~~~~
+~~~~~
+    + CategoryInfo      
+        : NotS    
+pecified: (Syst    em 
+check identi    fied 
+some issue    
+s::String) [],     
+RemoteException
+    + FullyQualifie    
+dErrorId : Nati    
+veCommandError
+ 
+
+WARNINGS:
+?: settings.ACCOUNT_EMAI
+L_REQUIRED is 
+deprecated, use: setting
+s.ACCOUNT_SIGNUP_FIELDS 
+= ['username*', 
+'password2*', 
+'password1*', 'email*']
+
+System check identified 
+1 issue (0 silenced).
