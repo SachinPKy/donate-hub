@@ -17,7 +17,10 @@ DEBUG = os.getenv("DJANGO_DEBUG", "True") == "True"
 ALLOWED_HOSTS = ['*']  # For Vercel, * is often easier for dynamic domains
 CSRF_TRUSTED_ORIGINS = [
     'https://*.vercel.app',
-    'https://donate-hub-six.vercel.app'
+    'https://donate-hub-six.vercel.app',
+    'http://localhost:5173',
+    'http://127.0.0.1:5173',
+    'http://localhost:8000',
 ]
 
 # Vercel-specific proxy settings
