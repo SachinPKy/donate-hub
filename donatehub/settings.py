@@ -187,7 +187,7 @@ ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 3
 
 # CRITICAL: Do NOT require email verification - allow JWT login for all users
 ACCOUNT_EMAIL_VERIFICATION = 'none'
-ACCOUNT_EMAIL_REQUIRED = False
+# ACCOUNT_EMAIL_REQUIRED is deprecated in allauth 65+ (using 'email*' in ACCOUNT_SIGNUP_FIELDS instead)
 ACCOUNT_AUTHENTICATED_LOGIN_REDIRECTS = False
 
 # Social account settings
