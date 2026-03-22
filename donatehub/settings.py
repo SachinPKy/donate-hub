@@ -28,6 +28,10 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 USE_X_FORWARDED_HOST = True
 ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'https'
 
+# Enforce secure cookies in production (Vercel is always HTTPS)
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+
 
 # ================= APPLICATIONS =================
 INSTALLED_APPS = [
