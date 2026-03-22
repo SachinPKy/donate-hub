@@ -18,9 +18,14 @@ def social_auth_callback(request):
     # DYNAMIC FALLBACK: If empty (local testing), use the current request host (IP address)
     if not frontend_base:
         scheme = 'http' if settings.DEBUG else 'https'
-        # The frontend usually runs on 5173, but let's try to match the request host
-        host = request.get_host().split(':')[0]
-        frontend_base = f"{scheme}://{host}:5173"
+        # Try to detect the correct host and port from the request
+        current_host = request.get_host()
+        # If accessing via IP, the frontend is usually on the same IP but different port
+        host_ip = current_host.split(':')[0]
+        # Most common Vite ports are 5173 or 5174
+        frontend_base = f"{scheme}://{host_ip}:5173"
+        # We could try to detect the port, but 5173 is the primary target. 
+        # For now, let's keep it simple but allow the user to see it.
         
     frontend_url = f"{frontend_base}/social-callback"
     
