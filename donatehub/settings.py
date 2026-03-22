@@ -23,10 +23,16 @@ CSRF_TRUSTED_ORIGINS = [
     'http://localhost:8000',
 ]
 
-# Vercel-specific proxy settings
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-USE_X_FORWARDED_HOST = True
-ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'https'
+# Proxy and Protocol settings (Dynamic based on environment)
+if not DEBUG:
+    # Vercel Production Settings
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    USE_X_FORWARDED_HOST = True
+    ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'https'
+else:
+    # Local Development Settings
+    USE_X_FORWARDED_HOST = False
+    ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'http'
 
 # Enforce secure cookies in production (Vercel is always HTTPS)
 CSRF_COOKIE_SECURE = True
@@ -169,8 +175,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 # ================= AUTH REDIRECTS =================
-# In settings.py, we make these relative so they work on any Vercel domain
-FRONTEND_URL = os.getenv("FRONTEND_URL", "")
+if DEBUG:
+    FRONTEND_URL = os.getenv("FRONTEND_URL", "http://localhost:5173")
+else:
+    FRONTEND_URL = os.getenv("FRONTEND_URL", "https://donate-hub-six.vercel.app")
+    
 LOGIN_URL = '/login'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/login'
