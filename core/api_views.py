@@ -56,9 +56,12 @@ class DonationListCreateView(generics.ListCreateAPIView):
         # Create tracking entry
         DonationTracking.objects.create(donation=donation)
 
-        # Restore Email confirmation service
-        if self.request.user.email:
-            try:
+        # Send emails
+        try:
+            from_email = getattr(settings, 'EMAIL_HOST_USER', None)
+            
+            # 1. Donor confirmation email
+            if self.request.user.email:
                 send_mail(
                     subject="Donation Received - DonateHub",
                     message=(
@@ -70,12 +73,32 @@ class DonationListCreateView(generics.ListCreateAPIView):
                         f"Track it here: {settings.FRONTEND_URL or 'https://' + self.request.get_host()}/tracking/{donation.id}\n\n"
                         f"Regards,\nDonateHub Team"
                     ),
-                    from_email=None,
+                    from_email=from_email,
                     recipient_list=[self.request.user.email],
                     fail_silently=True,
                 )
-            except Exception:
-                pass
+
+            # 2. Admin notification email (Donation Submission Alert)
+            if from_email:
+                send_mail(
+                    subject=f"New Donation Submission: {donation.category}",
+                    message=(
+                        f"Admin Alert: A new donation has been submitted.\n\n"
+                        f"Donor: {self.request.user.username} ({self.request.user.email})\n"
+                        f"Category: {donation.category}\n"
+                        f"Area: {donation.area}\n"
+                        f"District: {donation.district}\n"
+                        f"Pickup Date: {donation.pickup_date}\n"
+                        f"Receipt: {donation.receipt_number}\n\n"
+                        f"Manage it in the admin dashboard."
+                    ),
+                    from_email=from_email,
+                    recipient_list=[from_email],
+                    fail_silently=True,
+                )
+        except Exception as e:
+            logger.error(f"Failed to send donation emails: {e}")
+            pass
 
 class DonationDetailView(generics.RetrieveAPIView):
     serializer_class = DonationSerializer
