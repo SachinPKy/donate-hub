@@ -52,7 +52,12 @@ class DonationListCreateView(generics.ListCreateAPIView):
         # Handle images if provided in request.FILES
         images = self.request.FILES.getlist('images')
         for image in images:
-            DonationImage.objects.create(donation=donation, image=image)
+            try:
+                DonationImage.objects.create(donation=donation, image=image)
+            except Exception as e:
+                logger.error(f"Failed to save image {image.name}: {e}")
+                # We continue even if image saving fails (common on Vercel without cloud storage)
+
         # Create tracking entry
         DonationTracking.objects.create(donation=donation)
 

@@ -28,14 +28,61 @@ const AddDonation = () => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    const handleImageChange = (e) => {
+    const compressImage = (file) => {
+        return new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = (event) => {
+                const img = new Image();
+                img.src = event.target.result;
+                img.onload = () => {
+                    const canvas = document.createElement('canvas');
+                    const MAX_WIDTH = 1200;
+                    const MAX_HEIGHT = 1200;
+                    let width = img.width;
+                    let height = img.height;
+
+                    if (width > height) {
+                        if (width > MAX_WIDTH) {
+                            height *= MAX_WIDTH / width;
+                            width = MAX_WIDTH;
+                        }
+                    } else {
+                        if (height > MAX_HEIGHT) {
+                            width *= MAX_HEIGHT / height;
+                            height = MAX_HEIGHT;
+                        }
+                    }
+                    canvas.width = width;
+                    canvas.height = height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, width, height);
+                    canvas.toBlob((blob) => {
+                        const compressedFile = new File([blob], file.name, {
+                            type: 'image/jpeg',
+                            lastModified: Date.now(),
+                        });
+                        resolve(compressedFile);
+                    }, 'image/jpeg', 0.7); // 70% quality
+                };
+            };
+        });
+    };
+
+    const handleImageChange = async (e) => {
         const files = Array.from(e.target.files);
         if (files.length === 0) return;
 
         const maxImages = 5;
-        const newImages = files.slice(0, maxImages - images.length).map((file) => ({
-            file,
-            preview: URL.createObjectURL(file)
+        const availableSlots = maxImages - images.length;
+        const selectedFiles = files.slice(0, availableSlots);
+
+        const newImages = await Promise.all(selectedFiles.map(async (file) => {
+            const compressedFile = file.size > 1024 * 1024 ? await compressImage(file) : file;
+            return {
+                file: compressedFile,
+                preview: URL.createObjectURL(compressedFile)
+            };
         }));
 
         setImages((prev) => [...prev, ...newImages]);

@@ -63,6 +63,13 @@ INSTALLED_APPS = [
     'core',
 ]
 
+# Cloudinary Storage for Vercel Media
+CLOUDINARY_URL = os.getenv('CLOUDINARY_URL')
+if CLOUDINARY_URL:
+    INSTALLED_APPS.insert(INSTALLED_APPS.index('core'), 'cloudinary_storage')
+    INSTALLED_APPS.insert(INSTALLED_APPS.index('core'), 'cloudinary')
+    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
 
 # ================= MIDDLEWARE =================
 MIDDLEWARE = [
@@ -165,6 +172,10 @@ FILE_UPLOAD_MAX_MEMORY_SIZE = 5242880   # 5MB
 
 # Allowed image extensions
 ALLOWED_IMAGE_EXTENSIONS = ['jpg', 'jpeg', 'png', 'gif', 'webp']
+
+# Use Cloudinary if configured, otherwise local (local fails on Vercel)
+if CLOUDINARY_URL:
+    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 # Maximum image dimensions (optional validation)
 MAX_IMAGE_WIDTH = 4096
