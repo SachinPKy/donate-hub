@@ -63,10 +63,10 @@ class DonationListCreateView(generics.ListCreateAPIView):
             # 1. Donor confirmation email
             if self.request.user.email:
                 send_mail(
-                    subject="Donation Received - DonateHub",
+                    subject="Donation Submitted successfully - DonateHub",
                     message=(
                         f"Hello {self.request.user.username},\n\n"
-                        f"We have received your donation request.\n\n"
+                        f"Your donation request has been successfully submitted.\n\n"
                         f"Category: {donation.category}\n"
                         f"Location: {donation.area}\n"
                         f"Pickup Date: {donation.pickup_date}\n\n"
