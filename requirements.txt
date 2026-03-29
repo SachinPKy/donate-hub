@@ -10,3 +10,4 @@ gunicorn
 whitenoise
 django-cloudinary-storage
 cloudinary
+xhtml2pdf

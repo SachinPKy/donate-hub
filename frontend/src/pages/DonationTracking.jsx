@@ -32,16 +32,32 @@ const DonationTracking = () => {
       const response = await api.get(`receipt/${id}/pdf/`, {
         responseType: 'blob',
       });
-      const url = window.URL.createObjectURL(new Blob([response.data]));
-      const link = document.createElement('a');
-      link.href = url;
-      link.setAttribute('download', `receipt_${donation.receipt_number}.pdf`);
-      document.body.appendChild(link);
-      link.click();
-      link.parentNode.removeChild(link);
+      
+      const contentType = response.headers['content-type'] || 'application/pdf';
+      
+      if (contentType.includes('text/html')) {
+        // If it's HTML (fallback), open in a new tab for printing
+        const reader = new FileReader();
+        reader.onload = () => {
+          const win = window.open('', '_blank');
+          win.document.write(reader.result);
+          win.document.close();
+        };
+        reader.readAsText(response.data);
+      } else {
+        // If it's a PDF, download it normally
+        const url = window.URL.createObjectURL(new Blob([response.data], { type: 'application/pdf' }));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', `receipt_${donation.receipt_number}.pdf`);
+        document.body.appendChild(link);
+        link.click();
+        link.parentNode.removeChild(link);
+        window.URL.revokeObjectURL(url);
+      }
     } catch (err) {
       console.error('Error downloading receipt:', err);
-      alert('Failed to download receipt. Please try again later.');
+      alert('Failed to load receipt. Please try again later.');
     } finally {
       setDownloading(false);
     }
