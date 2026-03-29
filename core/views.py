@@ -56,10 +56,15 @@ def ai_category(request):
     description = request.GET.get('description', '').lower()
     
     fallback = "Household Items"
-    if not description:
-        return JsonResponse({"category": fallback})
-    
-    if "book" in description:
+    # Manual Fallback Logic (Keywords)
+    clothes_keywords = [
+        "shirt", "pant", "saree", "kurtha", "kurti", "dress", "undergarments", 
+        "bra", "undies", "socks", "garment", "clothing", "wear", "ethnic", 
+        "jeans", "t-shirt", "top", "leggings", "skirt"
+    ]
+    if any(k in description for k in clothes_keywords):
+        fallback = "Clothes"
+    elif "book" in description:
         fallback = "Books"
     elif "toy" in description:
         fallback = "Toys"
@@ -67,26 +72,30 @@ def ai_category(request):
         fallback = "Electronics"
     elif "shoe" in description:
         fallback = "Footwear"
-    elif "shirt" in description or "pant" in description:
-        fallback = "Clothes"
     elif "table" in description or "chair" in description:
         fallback = "Furniture"
     
     try:
         import google.generativeai as genai
         genai.configure(api_key=settings.GEMINI_API_KEY)
-        model = genai.GenerativeModel("models/gemini-2.5-flash")
+        # Fix model name to a valid version (1.5-flash is robust and fast)
+        model = genai.GenerativeModel("models/gemini-1.5-flash")
         
         prompt = (
-            "Choose ONE category from this list ONLY:\n"
+            "You are an AI for a donation platform called DonateHub. "
+            "Categorize the following donation item into EXACTLY ONE of these categories:\n"
             "Clothes, Books, Toys, Electronics, Furniture, Footwear, "
             "Educational Materials, Household Items.\n\n"
+            "IMPORTANT GUIDANCE:\n"
+            "- Ethnic wear like Sarees, Kurthas, and Kurtis belong to 'Clothes'.\n"
+            "- Undergarments/Innerwear belong to 'Clothes'.\n"
+            "- Items like bedding/pillows/curtains belong to 'Household Items'.\n\n"
             f"Description: {description}\n"
             "Return only the category name."
         )
         
         response = model.generate_content(prompt)
-        ai_text = response.text.lower()
+        ai_text = response.text.strip().capitalize()
         
         categories = {
             "clothes": "Clothes",
