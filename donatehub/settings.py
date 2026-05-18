@@ -115,21 +115,36 @@ TEMPLATES = [
 WSGI_APPLICATION = 'donatehub.wsgi.application'
 
 
-# ================= DATABASE (SUPABASE - SAFE) =================
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': 'postgres.brhhgmacrcuzvgaljyxu',
-        'PASSWORD': os.getenv("DB_PASSWORD"),
-        'HOST': 'aws-1-ap-south-1.pooler.supabase.com',
-        'PORT': '6543',
-        'CONN_MAX_AGE': 0,
-        'OPTIONS': {
-            'sslmode': 'require',
-        },
+# ================= DATABASE (SUPABASE / LOCAL FALLBACK) =================
+DB_NAME = os.getenv("DB_NAME")
+DB_USER = os.getenv("DB_USER")
+DB_HOST = os.getenv("DB_HOST")
+DB_PORT = os.getenv("DB_PORT")
+DB_PASSWORD = os.getenv("DB_PASSWORD")
+
+# Use local SQLite database in development if Postgres is not fully configured or using the old/invalid host
+if DEBUG and (not DB_PASSWORD or not DB_HOST or "pooler.supabase.com" in DB_HOST):
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': DB_NAME or "postgres",
+            'USER': DB_USER or "postgres",
+            'PASSWORD': DB_PASSWORD,
+            'HOST': DB_HOST,
+            'PORT': DB_PORT or "6543",
+            'CONN_MAX_AGE': 0,
+            'OPTIONS': {
+                'sslmode': 'require',
+            },
+        }
+    }
 
 
 # ================= PASSWORD VALIDATION =================
@@ -229,6 +244,11 @@ SOCIALACCOUNT_EMAIL_AUTHENTICATION_AUTO_CONNECT = True
 # OAuth scopes for Google and Facebook
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
+        'APP': {
+            'client_id': os.getenv("GOOGLE_CLIENT_ID", ""),
+            'secret': os.getenv("GOOGLE_CLIENT_SECRET", ""),
+            'key': ''
+        },
         'SCOPE': [
             'profile',
             'email',
